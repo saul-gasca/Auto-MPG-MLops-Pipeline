@@ -1,0 +1,63 @@
+# ===== Python =====
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# ===== Entornos virtuales =====
+venv/
+env/
+ENV/
+.venv/
+conda-env/
+
+# ===== Jupyter Notebooks =====
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# ===== DVC =====
+# DVC ya genera su propio .gitignore por carpeta (para los CSV),
+# pero por si acaso ignoramos también la caché local de DVC
+/.dvc/cache
+/.dvc/tmp
+/.dvc/plots
+*.dvc.lock
+
+# ===== MLflow =====
+mlruns/
+mlartifacts/
+mlflow.db
+
+# ===== Docker =====
+*.env
+.env.local
+.env.*.local
+
+# ===== Datos y modelos (por si acaso algo se escapa de DVC) =====
+*.csv
+!datasets/**/*.csv.dvc
+*.pkl
+*.joblib
+*.h5
+*.pt
+*.pth
+
+# ===== Sistema operativo =====
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ===== IDEs / Editores =====
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ===== Logs =====
+*.log
+logs/
