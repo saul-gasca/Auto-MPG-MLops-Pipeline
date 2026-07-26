@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 import pickle
 import mlflow
 import mlflow.sklearn
@@ -9,7 +8,6 @@ from sklearn.metrics import r2_score, root_mean_squared_error
 
 RAW_DATA_PATH = "datasets/raw/data_raw.csv"
 MODEL_OUTPUT_PATH = "models/model.pkl"
-
 
 
 def load_data(path: str) -> pd.DataFrame:
@@ -22,6 +20,7 @@ def clean_data(df: pd.DataFrame) -> pd.DataFrame:
     """Drop rows with missing horsepower values."""
     df_clean = df.dropna(subset=['horsepower'])
     return df_clean
+
 
 def train_model():
     print("Loading data...")

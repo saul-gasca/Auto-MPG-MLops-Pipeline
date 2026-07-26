@@ -64,3 +64,5 @@ def predict_mpg(car: CarFeatures):
     prediction = model.predict(input_data)[0]
 
     return {"predicted_mpg": round(float(prediction), 2)}
+
+
