@@ -1,0 +1,22 @@
+services:
+  trainer:
+    build:
+      context: .
+      dockerfile: Dockerfile.train
+    volumes:
+      - ./models:/app/models
+      - ./mlflow.db:/app/mlflow.db
+      - ./mlartifacts:/app/mlartifacts
+    container_name: mpg_trainer
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    volumes:
+      - ./models:/app/models
+    ports:
+      - "8000:8000"
+    container_name: mpg_api
+    depends_on:
+      - trainer

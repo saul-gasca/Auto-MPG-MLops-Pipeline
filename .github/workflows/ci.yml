@@ -1,0 +1,68 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install linting tools
+        run: pip install flake8
+
+      - name: Run flake8
+        run: flake8 src/ --max-line-length=120
+
+  docker-build:
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build trainer image
+        run: docker build -f Dockerfile.train -t mpg-trainer .
+
+      - name: Build api image
+        run: docker build -f Dockerfile.api -t mpg-api .
+
+  push:
+    runs-on: ubuntu-latest
+    needs: docker-build
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push trainer image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: Dockerfile.train
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/mpg-trainer:latest
+
+      - name: Build and push api image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: Dockerfile.api
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/mpg-api:latest
