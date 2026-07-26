@@ -22,7 +22,10 @@ jobs:
         run: pip install flake8
 
       - name: Run flake8
-        run: flake8 src/ --max-line-length=120
+        run: flake8 src/
+
+      - name: Run flake8
+        run: flake8 src/
 
   docker-build:
     runs-on: ubuntu-latest
