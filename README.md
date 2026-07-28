@@ -168,6 +168,17 @@ start → validate_data → train_model → validate_metrics → notify_success 
 3. Mount the MPGDataset project into the Airflow worker container so tasks can access datasets and models.
 4. Trigger the DAG from the Airflow UI (`http://localhost:8080`).
 
+### DAG Nodes Visualization
+
+#### Intermediate Validation
+<img width="722" height="264" alt="Screenshot 2026-07-27 150131" src="https://github.com/user-attachments/assets/e50f10cf-3067-4123-a1d9-27c3eaa73cc5" />
+
+#### Full Validation
+
+<img width="680" height="202" alt="Screenshot 2026-07-27 150209" src="https://github.com/user-attachments/assets/d4598c61-6cec-41ed-aefc-79a897efff8c" />
+
+
+
 ---
 
 ## Data Versioning (DVC)
